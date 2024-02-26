@@ -1,0 +1,92 @@
+<!-- templates/invoice/create_invoice.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Invoice</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+    }
+
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Create Invoice</h1>
+    <form method="post">
+      {% csrf_token %}
+      <label for="id_name">Name:</label>
+      {{ user_form.name }}
+      <label for="id_address">Address:</label>
+      {{ user_form.address }}
+      <label for="id_phone">Phone:</label>
+      {{ user_form.phone }}
+      <label for="id_gst_number">GST Number:</label>
+      {{ user_form.gst_number }}
+      
+      <h2>Invoice Details</h2>
+      <label for="id_service">Service:</label>
+      {{ invoice_form.service }}
+      <label for="id_quantity">Quantity:</label>
+      {{ invoice_form.quantity }}
+      <label for="id_unit_price">Unit Price:</label>
+      {{ invoice_form.unit_price }}
+      <label for="id_total_price">Total Price:</label>
+      {{ invoice_form.total_price }}
+
+      <button type="submit">Save Invoice</button>
+    </form>
+  </div>
+</body>
+</html>
