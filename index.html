@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postman Request Form</title>
+</head>
+
+<body>
+    <h1>Postman Request Form</h1>
+    <form id="postman-form" onsubmit="sendPostmanRequest(event)">
+        <label for="authentication-key">Authentication Key:</label>
+        <input type="text" id="authentication-key" required>
+        <button type="submit">Send Request</button>
+    </form>
+
+    <div id="response-container"></div>
+
+    <form id="user-info-form" style="display: none;" onsubmit="submitUserInfo(event)">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function sendPostmanRequest(event) {
+            event.preventDefault();
+            var authenticationKey = document.getElementById('authentication-key').value;
+            fetch('https://wa20.nuke.co.in/v5/api/session.php', {
+                method: 'POST',
+                headers: {
+                    'Authorization': authenticationKey,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "brodcast_service": "whatsapp_credits",
+                    "template_id": "session_message",
+                    "broadcast_message": "Test message",
+                    "schedule_time": "12:46:31",
+                    "contacts": "917987701494",
+                    "buttons": "1",
+                    "button1_value": "111",
+                    "button2_value": "112",
+                    "button3_value": "113",
+                    "call_title": "Call Now",
+                    "call_number": "911234567890",
+                    "url_title": "Visit",
+                    "url_value": "https://stackflow.com"
+                })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Authentication Failed');
+                    }
+                })
+                .then(data => {
+                    document.getElementById('response-container').innerHTML = '<p>Status Code: ' + response.status + '</p>';
+                    document.getElementById('user-info-form').style.display = 'block';
+                })
+                .catch(error => {
+                    document.getElementById('response-container').innerHTML = '<p>Error: ' + error.message + '</p>';
+                });
+        }
+
+        function submitUserInfo(event) {
+            event.preventDefault();
+            var name = document.getElementById('name').value;
+            var phone = document.getElementById('phone').value;
+            // Here you can proceed with further actions, like sending the user info to a backend server
+            console.log('Name:', name);
+            console.log('Phone:', phone);
+        }
+    </script>
+</body>
+
+</html>
